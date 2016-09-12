@@ -22,8 +22,8 @@ router.get('/hosts', function(req, res, next) {
 });
 
 router.get('/nginx', function(req, res, next) {
-    var srcpath = '/Users/tdev/Desktop';
-    var files = getFiles('/Users/tdev/Desktop');
+    var srcpath = '/etc/nginx/sites-available';
+    var files = getFiles('/etc/nginx/sites-available');
     console.log(files);
     res.render('index', { title: 'Sites Available', directories: files });
 });
