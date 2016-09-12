@@ -23,8 +23,16 @@ router.get('/hosts', function(req, res, next) {
 
 router.get('/nginx', function(req, res, next) {
     var files = getFiles('/etc/nginx/sites-available');
+    files.forEach(function(err, file) {
+        fs.statsSync(file, function(err, stats) {
+            if (err) {
+
+            }
+            console.log(stats);
+        });
+    });
     console.log(files);
-    res.render('index', { title: 'Directory', directories: files });
+    res.render('index', { title: 'Sites Available', directories: files });
 });
 
 module.exports = router;
