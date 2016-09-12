@@ -10,12 +10,7 @@ function getDirectories(srcpath) {
 }
 
 function getFiles(srcpath) {
-    fs.readdir(function(err, files) {
-        if (err) return;
-        files.forEach(function(f) {
-            console.log('Files: ' + f);
-        });
-    });
+    return fs.readdirSync(srcpath)
 }
 router.get('/hosts', function(req, res, next) {
     fs.readFile('/etc/hosts', 'utf8', function(err, data) {
