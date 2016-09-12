@@ -29,7 +29,7 @@ router.get('/nginx', function(req, res, next) {
 });
 router.get('/nginx/:site', function(req, res, next) {
     if (req.params.site) {
-        var path = '/etc/nginx/sites-available' + req.params.site;
+        var path = '/etc/nginx/sites-available/' + req.params.site;
         fs.readFile(path, 'utf8', function(err, data) {
             if (err) {
                 return console.log(err);
