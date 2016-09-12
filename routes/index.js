@@ -34,7 +34,7 @@ router.get('/nginx/:site', function(req, res, next) {
             if (err) {
                 return console.log(err);
             }
-            res.render('index', { title: 'hosts', data: data });
+            res.render('index', { title: req.params.site, data: data });
         });
     }
 });
