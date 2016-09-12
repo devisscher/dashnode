@@ -23,7 +23,8 @@ router.get('/hosts', function(req, res, next) {
 });
 
 router.get('/nginx', function(req, res, next) {
-    var directories = getDirectories('/etc/nginx/sites-available');
+    var directories = getDirectories('~/etc/nginx/sites-available');
+    console.log(directories);
     res.render('index', { title: 'Directory', directories: directories });
 });
 
