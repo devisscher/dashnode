@@ -22,17 +22,21 @@ router.get('/hosts', function(req, res, next) {
 });
 
 router.get('/nginx', function(req, res, next) {
-    var files = getFiles('/etc/nginx/sites-available');
-    files.forEach(function(err, file) {
-        fs.statsSync(file, function(err, stats) {
-            if (err) {
-
-            }
-            console.log(stats);
-        });
-    });
+    var srcpath = '/Users/tdev/Desktop';
+    var files = getFiles('/Users/tdev/Desktop');
     console.log(files);
     res.render('index', { title: 'Sites Available', directories: files });
+});
+router.get('/nginx/:site', function(req, res, next) {
+    if (req.params.site) {
+        let path = '/etc/nginx/sites-available' + req.params.site;
+        fs.readFile(path, 'utf8', function(err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            res.render('index', { title: 'hosts', data: data });
+        });
+    }
 });
 
 module.exports = router;

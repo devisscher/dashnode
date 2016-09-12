@@ -2,9 +2,13 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
-  ul
+  p Welcome to #{title}            
+  table
     if directories
       for directory in directories
-        li #{directory}
+        tr
+          td #{directory}
+          td 
+            a(href="/nginx/#directory}") Edit
+
   textarea(style="width:100%;height:70vh;") #{data}
