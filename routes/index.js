@@ -10,13 +10,6 @@ function getDirectories(srcpath) {
 }
 
 function getFiles(srcpath) {
-    fs.realpath(function(err, srcpath) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        console.log('Path is : ' + path);
-    });
     fs.readdir(function(err, files) {
         if (err) return;
         files.forEach(function(f) {
