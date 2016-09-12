@@ -10,7 +10,7 @@ function getDirectories(srcpath) {
 }
 
 function getFiles(srcpath) {
-    fs.realpath(__dirname, function(err, path) {
+    fs.realpath(__dirname, function(err, srcpath) {
         if (err) {
             console.log(err);
             return;
