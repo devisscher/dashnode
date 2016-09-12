@@ -8,11 +8,22 @@ function getDirectories(srcpath) {
         return fs.statSync(path.join(srcpath, file)).isDirectory();
     });
 }
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    var directories = getDirectories('/Users/tdev');
-    res.render('index', { title: 'Directory', directories: directories });
-});
+
+function getFiles(srcpath) {
+    fs.realpath(__dirname, function(err, path) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log('Path is : ' + path);
+    });
+    fs.readdir(__dirname, function(err, files) {
+        if (err) return;
+        files.forEach(function(f) {
+            console.log('Files: ' + f);
+        });
+    });
+}
 router.get('/hosts', function(req, res, next) {
     fs.readFile('/etc/hosts', 'utf8', function(err, data) {
         if (err) {
@@ -23,9 +34,9 @@ router.get('/hosts', function(req, res, next) {
 });
 
 router.get('/nginx', function(req, res, next) {
-    var directories = getDirectories('~/etc/nginx/sites-available');
-    console.log(directories);
-    res.render('index', { title: 'Directory', directories: directories });
+    var files = getFiles('/etc/nginx/sites-available');
+    console.log(files);
+    res.render('index', { title: 'Directory', directories: files });
 });
 
 module.exports = router;
