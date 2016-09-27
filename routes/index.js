@@ -34,10 +34,18 @@ router.get('/apps', function(req, res, next) {
     res.render('index', { title: 'Applications', directories: directories });
 });
 router.get('/apps/:name', function(req, res, next) {
-    var srcpath = '/home/';
-    var directories = getDirectories('/home/');
-    console.log(directories);
-    res.render('index', { title: 'Applications', directories: directories });
+
+    var exec = require('child_process').exec;
+    exec('sudo service nginx reload', function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            res.send('exec error: ' + error);
+
+        } else {
+            res.send('Successfully started ' + req.params.name);
+        }
+    });
 });
 router.get('/nginx/:site', function(req, res, next) {
     if (req.params.site) {
