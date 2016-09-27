@@ -57,7 +57,7 @@ router.get('/appstop/:name', function(req, res, next) {
             res.send('exec error: ' + error);
 
         } else {
-            res.send('Successfully started ' + req.params.name);
+            res.send('Successfully stopped ' + req.params.name);
         }
     });
 });
