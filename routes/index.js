@@ -54,7 +54,7 @@ router.get('/nginx/:site', function(req, res, next) {
             if (err) {
                 return console.log(err);
             }
-            res.render('index', { title: req.params.site, data: data });
+            res.render('nginx', { title: req.params.site, data: data });
         });
     }
 });
