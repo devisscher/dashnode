@@ -33,10 +33,24 @@ router.get('/apps', function(req, res, next) {
     console.log(directories);
     res.render('index', { title: 'Applications', directories: directories });
 });
-router.get('/apps/:name', function(req, res, next) {
+router.get('/appstart/:name', function(req, res, next) {
     var appRoot = "/home/" + req.params.name;
     var exec = require('child_process').exec;
     exec('forever start ' + appRoot + "/bin/www", function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            res.send('exec error: ' + error);
+
+        } else {
+            res.send('Successfully started ' + req.params.name);
+        }
+    });
+});
+router.get('/appstop/:name', function(req, res, next) {
+    var appRoot = "/home/" + req.params.name;
+    var exec = require('child_process').exec;
+    exec('forever stop ' + appRoot + "/bin/www", function(error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
