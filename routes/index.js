@@ -34,9 +34,9 @@ router.get('/apps', function(req, res, next) {
     res.render('index', { title: 'Applications', directories: directories });
 });
 router.get('/apps/:name', function(req, res, next) {
-
+    var appRoot = "/home/" + req.params.name;
     var exec = require('child_process').exec;
-    exec('sudo service nginx reload', function(error, stdout, stderr) {
+    exec('forever start ' + appRoot + "/bin/www", function(error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         if (error !== null) {
