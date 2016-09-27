@@ -38,5 +38,52 @@ router.get('/nginx/:site', function(req, res, next) {
         });
     }
 });
+// Save file
+router.post('/nginx/:site', function(req, res, next) {
+    if (req.params.site) {
+        var path = '/etc/nginx/sites-available/' + req.params.site;
+        fs.readFile(path, 'utf8', function(err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            res.render('index', { title: req.params.site, data: data });
+        });
+    }
+});
+// Start or stop process
+router.post('/nginx/reload', function(req, res, next) {
+    var exec = require('child_process').exec;
+    exec('node -v', function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            res.send('exec error: ' + error);
+
+        }
+    });
+});
+
+router.post('/nginx/:site/start', function(req, res, next) {
+    if (req.params.site) {
+        var path = '/etc/nginx/sites-available/' + req.params.site;
+        fs.readFile(path, 'utf8', function(err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            res.render('index', { title: req.params.site, data: data });
+        });
+    }
+});
+router.post('/nginx/:site/end', function(req, res, next) {
+    if (req.params.site) {
+        var path = '/etc/nginx/sites-available/' + req.params.site;
+        fs.readFile(path, 'utf8', function(err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            res.render('index', { title: req.params.site, data: data });
+        });
+    }
+});
 
 module.exports = router;
