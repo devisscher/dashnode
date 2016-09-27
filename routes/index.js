@@ -27,6 +27,12 @@ router.get('/nginx', function(req, res, next) {
     console.log(files);
     res.render('index', { title: 'Sites Available', directories: files });
 });
+router.get('/apps', function(req, res, next) {
+    var srcpath = '/home/';
+    var directories = getDirectories('/home/');
+    console.log(directories);
+    res.render('index', { title: 'Applications', directories: directories });
+});
 router.get('/nginx/:site', function(req, res, next) {
     if (req.params.site) {
         var path = '/etc/nginx/sites-available/' + req.params.site;
