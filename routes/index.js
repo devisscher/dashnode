@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var toMarkdown = require('to-markdown');
+var pm2 = require('pm2');
+var marked = require('marked');
 var fs = require('fs'),
     path = require('path');
 
@@ -13,23 +16,20 @@ function getFiles(srcpath) {
     return fs.readdirSync(srcpath)
 }
 router.get('/', function(req, res, next) {
-    // Show running node apps
-    var exec = require('child_process').exec;
-    exec('pm2 jlist', function(error, stdout, stderr) {
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        // Making sure
-        if (error !== null) {
-            res.send('exec error: ' + error);
+    pm2.connect(function(err) {
+        if (err) {
+            console.error(err);
+            process.exit(2);
         } else {
-            var vm = {
-                title: 'Dashnode',
-                results: stdout
-            }
-            res.render('index', vm);
+            pm2.list(function(err, list) {
+                var vm = {
+                    title: 'Dashnode',
+                    results: list
+                }
+                res.render('index', vm);
+            })
         }
-    })
-
+    });
 });
 router.get('/hosts', function(req, res, next) {
     fs.readFile('/etc/hosts', 'utf8', function(err, data) {
@@ -54,6 +54,41 @@ router.get('/apps', function(req, res, next) {
 });
 
 /* Start App */
+
+router.get('/appstartpm', function(req, res, next) {
+    var startScript = req.query.execPath;
+    pm2.connect(function(err) {
+        if (err) {
+            console.error(err);
+            process.exit(2);
+        }
+        pm2.start({
+            script: startScript, // Script to be run
+            exec_mode: 'cluster', // Allow your app to be clustered
+            instances: 4, // Optional: Scale your app by 4
+            max_memory_restart: '100M' // Optional: Restart your app if it reaches 100Mo
+        }, function(err, apps) {
+            pm2.disconnect(); // Disconnect from PM2
+            if (err) throw err
+        });
+        res.redirect('/');
+    });
+});
+router.get('/appstoppm/:p', function(req, res, next) {
+    var startScript = req.query.execPath;
+    var p = req.params.p;
+    pm2.connect(function(err) {
+        if (err) {
+            console.error(err);
+            process.exit(2);
+        }
+        pm2.stop(p, function(err, apps) {
+            pm2.disconnect(); // Disconnect from PM2
+            if (err) throw err
+        });
+        res.redirect('/');
+    });
+});
 router.get('/appstart/:name', function(req, res, next) {
     var appRoot = "/home/" + req.params.name;
     var exec = require('child_process').exec;

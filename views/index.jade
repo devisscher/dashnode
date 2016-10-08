@@ -13,6 +13,21 @@ block content
           td 
             a(href="/appstop/#{directory}") stop
     if results
-      div= results
-      for result in results
-        p= result.pid
+      table.table.table-responsive
+        tr
+          th pid
+          th name
+          th instances
+        for result in results
+          tr
+            td= result.pid
+            td= result.name
+            td= result.pm2_env.instances
+            td= result.pm2_env.pm_exec_path
+            td
+              a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}") Restart
+            td
+              a(href="/appstoppm/#{result.name}") Stop 
+            
+            
+                
