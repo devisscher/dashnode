@@ -12,3 +12,7 @@ block content
             a(href="/appstart/#{directory}") start
           td 
             a(href="/appstop/#{directory}") stop
+    if results
+      div= results
+      for result in results
+        p= result.pid

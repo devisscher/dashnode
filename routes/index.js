@@ -12,6 +12,26 @@ function getDirectories(srcpath) {
 function getFiles(srcpath) {
     return fs.readdirSync(srcpath)
 }
+router.get('/', function(req, res, next) {
+    // Show running node apps
+    var exec = require('child_process').exec;
+    exec('pm2 prettylist', function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+
+        if (error !== null) {
+            res.send('exec error: ' + error);
+
+        } else {
+            var vm = {
+                title: 'Dashnode',
+                results: stdout
+            }
+            res.render('index', vm);
+        }
+    })
+
+});
 router.get('/hosts', function(req, res, next) {
     fs.readFile('/etc/hosts', 'utf8', function(err, data) {
         if (err) {
@@ -33,6 +53,8 @@ router.get('/apps', function(req, res, next) {
     console.log(directories);
     res.render('index', { title: 'Applications', directories: directories });
 });
+
+/* Start App */
 router.get('/appstart/:name', function(req, res, next) {
     var appRoot = "/home/" + req.params.name;
     var exec = require('child_process').exec;
@@ -47,6 +69,7 @@ router.get('/appstart/:name', function(req, res, next) {
         }
     });
 });
+/* Stop App */
 router.get('/appstop/:name', function(req, res, next) {
     var appRoot = "/home/" + req.params.name;
     var exec = require('child_process').exec;
