@@ -55,21 +55,23 @@ router.get('/apps', function(req, res, next) {
 
 /* Start App */
 
-router.get('/appstartpm', function(req, res, next) {
+router.get('/appstartpm', function(req, res) {
     var startScript = req.query.execPath;
     var exec = require('child_process').exec;
     exec('pm2 start ' + startScript, function(error, stdout, stderr) {
         if (stderr) {
-
+            console.log(stderr);
         } else {
-            console.log(stdout);
+            setTimeout(function() {
+                console.log(stdout);
+                res.redirect('/');
+            }, 5000);
+
         }
     });
-    setTimeout(function() {
-        res.redirect('/');
-    }, 3000);
+
 });
-router.get('/pulllatest', function(req, res, next) {
+router.get('/pulllatest', function(req, res) {
     var repoHttps = req.query.repo;
     var execPath = req.query.execPath;
     var exec = require('child_process').exec;
@@ -90,7 +92,7 @@ router.get('/appstoppm', function(req, res, next) {
     });
     setTimeout(function() {
         res.redirect('/');
-    }, 3000);
+    }, 5000);
 });
 
 router.get('/appstart/:name', function(req, res, next) {
