@@ -18,10 +18,9 @@ router.get('/', function(req, res, next) {
     exec('pm2 prettylist', function(error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
-
+// Making sure
         if (error !== null) {
             res.send('exec error: ' + error);
-
         } else {
             var vm = {
                 title: 'Dashnode',
