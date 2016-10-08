@@ -79,8 +79,9 @@ router.get('/pulllatest', function(req, res) {
     var repoHttps = req.query.repo;
     var execPath = req.query.execPath;
     var exec = require('child_process').exec;
-    exec('git -C ' + +' pull ' + repo, function(error, stdout, stderr) {});
-    res.redirect('/');
+    exec('git pull ' + repoHttps + " " + execPath, function(error, stdout, stderr) {
+        res.send(stdout);
+    });
 });
 router.get('/appstoppm', function(req, res, next) {
     var startScript = req.query.execPath;

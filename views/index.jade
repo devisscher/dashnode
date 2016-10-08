@@ -16,24 +16,24 @@ block content
       table.table.table-responsive
         tr
           th pid
+          th id
           th name
           th instances
           th exec path
           th repo
           th Pull latest
-          th Restart
-          th Stop
+          th Start/Stop
         for result in results
           tr
             td= result.pid
-            td= result.id
+            td= result.pm_id
             td= result.name
             td= result.pm2_env.instances
             td= result.pm2_env.pm_exec_path
             if result.pm2_env.versioning
               td= result.pm2_env.versioning.url
               td
-                a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}&repo=#{}") Pull latest
+                a(href="/pulllatest?execPath=#{result.pm2_env.pm_cwd}&repo=#{result.pm2_env.versioning.url}") Pull latest
             else
               td
               td
