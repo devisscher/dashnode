@@ -97,7 +97,7 @@ router.get('/appstoppm', function(req, res, next) {
         }
     });
     setTimeout(function() {
-    res.redirect('/');
+        res.redirect('/');
     }, 3000);
 });
 
