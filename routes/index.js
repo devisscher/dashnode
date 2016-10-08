@@ -57,24 +57,17 @@ router.get('/apps', function(req, res, next) {
 
 router.get('/appstartpm', function(req, res, next) {
     var startScript = req.query.execPath;
-    pm2.connect(function(err) {
-        if (err) {
-            console.error(err);
-            process.exit(2);
+    var exec = require('child_process').exec;
+    exec('pm2 start ' + startScript, function(error, stdout, stderr) {
+        if (stderr) {
+
+        } else {
+            console.log(stdout);
         }
-        pm2.start({
-            script: startScript, // Script to be run
-            exec_mode: 'cluster', // Allow your app to be clustered
-            instances: 4, // Optional: Scale your app by 4
-            max_memory_restart: '100M' // Optional: Restart your app if it reaches 100Mo
-        }, function(err, apps) {
-            pm2.disconnect(); // Disconnect from PM2
-            if (err) throw err
-        });
-        setTimeout(function() {
-            res.redirect('/');
-        }, 3000);
     });
+    setTimeout(function() {
+        res.redirect('/');
+    }, 3000);
 });
 router.get('/pulllatest', function(req, res, next) {
     var repoHttps = req.query.repo;
