@@ -31,12 +31,14 @@ block content
             td= result.pm2_env.pm_exec_path
             if result.pm2_env.versioning
               td= result.pm2_env.versioning.url
+              td
+                a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}&repo=#{}") Pull latest
             td
-              a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}&repo=#{}") Pull latest
-            td
-              a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}") Restart
-            td
-              a(href="/appstoppm?execPath=#{result.pm2_env.pm_exec_path}") Stop 
+              if result.pid === 0
+                a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}") Start
+              else
+                a(href="/appstoppm?execPath=#{result.pm2_env.pm_exec_path}") Stop 
+              
             
             
                 
