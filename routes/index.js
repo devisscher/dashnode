@@ -62,22 +62,16 @@ router.get('/appstartpm', function(req, res) {
         if (stderr) {
             console.log(stderr);
         } else {
-            setTimeout(function() {
-                console.log(stdout);
-                res.redirect('/');
-            }, 5000);
-
+            
         }
     });
-
+    res.redirect('/');
 });
 router.get('/pulllatest', function(req, res) {
     var repoHttps = req.query.repo;
     var execPath = req.query.execPath;
     var exec = require('child_process').exec;
-    exec('git -C ' + +' pull ' + repo, function(error, stdout, stderr) {
-
-    });
+    exec('git -C ' + +' pull ' + repo, function(error, stdout, stderr) {});
     res.redirect('/');
 });
 router.get('/appstoppm', function(req, res, next) {
