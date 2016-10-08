@@ -74,9 +74,8 @@ router.get('/appstartpm', function(req, res, next) {
         res.redirect('/');
     });
 });
-router.get('/appstoppm/:p', function(req, res, next) {
-    var startScript = req.query.execPath;
-    var p = req.params.p;
+router.get('/appstoppm', function(req, res, next) {
+    var p = req.query.p;
     pm2.connect(function(err) {
         if (err) {
             console.error(err);
