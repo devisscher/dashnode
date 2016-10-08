@@ -74,6 +74,15 @@ router.get('/appstartpm', function(req, res, next) {
         res.redirect('/');
     });
 });
+router.get('/pulllatest', function(req, res, next) {
+    var repoHttps = req.query.repo;
+    var execPath = req.query.execPath;
+    var exec = require('child_process').exec;
+    exec('git -C ' + + ' pull ' + repo, function(error, stdout, stderr) {
+
+    });
+    res.redirect('/');
+});
 router.get('/appstoppm', function(req, res, next) {
     var startScript = req.query.execPath;
     pm2.connect(function(err) {
