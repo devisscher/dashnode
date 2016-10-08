@@ -71,14 +71,17 @@ router.get('/appstartpm', function(req, res, next) {
             pm2.disconnect(); // Disconnect from PM2
             if (err) throw err
         });
-        res.redirect('/');
+
     });
+    setTimeout(function() {
+        res.redirect('/');
+    }, 3000);
 });
 router.get('/pulllatest', function(req, res, next) {
     var repoHttps = req.query.repo;
     var execPath = req.query.execPath;
     var exec = require('child_process').exec;
-    exec('git -C ' + + ' pull ' + repo, function(error, stdout, stderr) {
+    exec('git -C ' + +' pull ' + repo, function(error, stdout, stderr) {
 
     });
     res.redirect('/');
@@ -91,11 +94,15 @@ router.get('/appstoppm', function(req, res, next) {
             process.exit(2);
         }
         pm2.stop(startScript, function(err, apps) {
+
             pm2.disconnect(); // Disconnect from PM2
             if (err) throw err
         });
-        res.redirect('/');
+
     });
+    setTimeout(function() {
+        res.redirect('/');
+    }, 3000);
 });
 router.get('/appstart/:name', function(req, res, next) {
     var appRoot = "/home/" + req.params.name;
