@@ -71,11 +71,10 @@ router.get('/appstartpm', function(req, res, next) {
             pm2.disconnect(); // Disconnect from PM2
             if (err) throw err
         });
-
+        setTimeout(function() {
+            res.redirect('/');
+        }, 3000);
     });
-    setTimeout(function() {
-        res.redirect('/');
-    }, 3000);
 });
 router.get('/pulllatest', function(req, res, next) {
     var repoHttps = req.query.repo;
