@@ -15,10 +15,10 @@ function getFiles(srcpath) {
 router.get('/', function(req, res, next) {
     // Show running node apps
     var exec = require('child_process').exec;
-    exec('pm2 prettylist', function(error, stdout, stderr) {
+    exec('pm2 jlist', function(error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
-// Making sure
+        // Making sure
         if (error !== null) {
             res.send('exec error: ' + error);
         } else {
