@@ -34,6 +34,9 @@ block content
               td= result.pm2_env.versioning.url
               td
                 a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}&repo=#{}") Pull latest
+            else
+              td
+              td
             td
               if result.pid === 0
                 a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}") Start

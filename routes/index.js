@@ -62,10 +62,9 @@ router.get('/appstartpm', function(req, res) {
         if (stderr) {
             console.log(stderr);
         } else {
-
+            res.redirect('/');
         }
     });
-    res.send('Successfully started app' || stderr);
 });
 router.get('/pulllatest', function(req, res) {
     var repoHttps = req.query.repo;
