@@ -75,13 +75,13 @@ router.get('/appstartpm', function(req, res, next) {
     });
 });
 router.get('/appstoppm', function(req, res, next) {
-    var p = req.query.p;
+    var startScript = req.query.startScript;
     pm2.connect(function(err) {
         if (err) {
             console.error(err);
             process.exit(2);
         }
-        pm2.stop({ pid: p }, function(err, apps) {
+        pm2.stop({ script: startScript }, function(err, apps) {
             pm2.disconnect(); // Disconnect from PM2
             if (err) throw err
         });
