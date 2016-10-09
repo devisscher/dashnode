@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+  h1= title
+  p Welcome to #{title}            
+  table
+    if directories
+      for directory in directories
+        tr
+          td #{directory}
+          td 
+            a(href="/appstart/#{directory}") start
+          td 
+            a(href="/appstop/#{directory}") stop
+    if results
+      table.table.table-responsive
+        tr
+          th pid
+          th id
+          th name
+          th instances
+          th exec path
+          th repo
+          th Pull latest
+          th Start/Stop
+        for result in results
+          tr
+            td= result.pid
+            td= result.pm_id
+            td= result.name
+            td= result.pm2_env.instances
+            td= result.pm2_env.pm_exec_path
+            if result.pm2_env.versioning
+              td= result.pm2_env.versioning.url
+              td
+                a(href="/pulllatest?execPath=#{result.pm2_env.pm_cwd}&repo=#{result.pm2_env.versioning.url}") Pull latest
+            else
+              td
+              td
+            td
+              if result.pid === 0
+                a(href="/appstartpm?execPath=#{result.pm2_env.pm_exec_path}") Start
+              else
+                a(href="/appstoppm?execPath=#{result.pm2_env.pm_exec_path}") Stop 
+              
+            
+            
+                

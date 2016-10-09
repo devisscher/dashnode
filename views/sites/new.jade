@@ -1,0 +1,39 @@
+extends ../layout
+block content
+    h2.page-header= title
+    .form-group
+        label(for="domainName") Domain name:
+        input.form-control(type="text" name="domainName" id="domainName")
+    .form-group
+        label(for="localSetup")  Are you setting this up locally?(On your mac?)&nbsp;
+        input(type="checkbox" id="localSetup" value="")
+        p.text-muted This will add the domain name to your host file.
+    .form-group
+        label(for="executionPath") Site path:
+        select.form-control(type="select" name="executionPath" id="executionPath")
+            if directories
+                for directory in directories
+                    option(value="#{directory}") #{directory}
+    .form-group
+        label(for="environmentVariables") Environment Variables:
+        textarea.form-control(type="text" name="environmentVariables") #{envVariables}
+    .form-group
+        label(for="envPort") What port should the app run on:
+        input.form-control(type="number" id="envPort" name="envPort")
+        button(id="savePort") Save
+    .form-group
+        input(type="submit")
+    script.
+        $(document).ready(function(){
+            $("#savePort").click(function(e){
+                e.preventDefault();
+                alert("clicked")
+                var port = $("#envPort").val();
+                var domainName = $("#domainName").val();
+                var url = "/sites/save-nginx-config/";
+                $.post(url, { port: port, domainName: domainName })
+                    .done(function( data ) {
+                        alert( "Data Loaded: " + data );
+                    });
+                });
+        });
