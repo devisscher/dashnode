@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
         } else {
             pm2.list(function(err, list) {
                 var vm = {
-                    title: 'Dashnode',
+                    title: 'Dashnode Overview',
                     results: list
                 }
                 res.render('index', vm);
