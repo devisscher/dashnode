@@ -10,12 +10,28 @@ mongoose.connect('mongodb://localhost/dashnode');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var sites = require('./routes/sites');
-var commands = require('./routes/commands');
+var settings = require('./routes/settings');
+var nginx = require('./routes/nginx');
 var app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+/** Get IP Address
+ * Sets the IP address on which Dashnode is running
+ */
+function getIpAddress() {
+    console.log("Getting IP address")
+    var exec = require('child_process').exec;
+    exec('curl -s http://whatismyip.akamai.com/', function(error, IP) {
+        if (error) {
+            console.log(error);
+        } else {
+            app.locals.ipAddress = IP;
+        }
+    });
+};
+getIpAddress();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -25,20 +41,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist/')));
+app.use(express.static(path.join(__dirname, 'docs/')));
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/sites', sites);
-app.use('/commands', commands);
-// catch 404 and forward to error handler
+app.use('/nginx', nginx);
+app.use('/settings', settings);
+
+/** error
+ * 
+ * Development error handler
+ * @member error
+ */
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-
 // error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -50,9 +71,11 @@ if (app.get('env') === 'development') {
         });
     });
 }
-
-// production error handler
-// no stacktraces leaked to user
+/** error
+ * 
+ * Production error handler
+ * @member error
+ */
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {

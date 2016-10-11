@@ -1,0 +1,6 @@
+extends layout
+block content
+    form(action="/settings" method="post")
+        .form-group
+            label(for="ipAddress") Server IP Address
+            input.form-control(id="ipAddress" name="ipAddress" value="#{ipAddress}")

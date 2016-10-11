@@ -1,25 +1,27 @@
 {
-  "name": "dashnode",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "body-parser": "~1.15.1",
-    "bootstrap": "^3.3.7",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "dotenv": "^2.0.0",
-    "express": "~4.13.4",
-    "jade": "~1.11.0",
-    "jquery": "^3.1.1",
-    "marked": "^0.3.6",
-    "mongoose": "^4.6.3",
-    "mongoose-url-slugs": "^0.2.1",
-    "morgan": "~1.7.0",
-    "pm2": "^2.0.18",
-    "serve-favicon": "~2.3.0",
-    "to-markdown": "^3.0.1"
-  }
+    "name": "dashnode",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "prestart": "jsdoc -c jsdocconf.json -t ./node_modules/ink-docstrap/template",
+        "start": "node ./bin/www"
+    },
+    "dependencies": {
+        "body-parser": "~1.15.1",
+        "bootstrap": "^3.3.7",
+        "cookie-parser": "~1.4.3",
+        "debug": "~2.2.0",
+        "dotenv": "^2.0.0",
+        "express": "~4.13.4",
+        "ink-docstrap": "^1.3.0",
+        "jade": "~1.11.0",
+        "jquery": "^3.1.1",
+        "marked": "^0.3.6",
+        "mongoose": "^4.6.3",
+        "mongoose-url-slugs": "^0.2.1",
+        "morgan": "~1.7.0",
+        "pm2": "^2.0.18",
+        "serve-favicon": "~2.3.0",
+        "to-markdown": "^3.0.1"
+    }
 }

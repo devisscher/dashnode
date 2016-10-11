@@ -8,7 +8,6 @@ html(lang='en')
     meta(name='author', content='')
     link(rel='icon', href='../../favicon.ico')
     title= title
-    
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='https://bootswatch.com/darkly/bootstrap.min.css')
     script(src='https://code.jquery.com/jquery-3.1.1.min.js')
@@ -45,14 +44,32 @@ html(lang='en')
                 | Overview 
                 span.sr-only (current)
             li
+              a(href='/settings') Settings
+            li
               a(href='/sites/add-site') New site
             li
               a(href='/networking') Networking
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
           h1.page-header= title
+          .row.placeholders
+            .col-xs-6.col-sm-3.placeholder
+              if results
+                h4 Processes
+                h3= results.length
+                a(href="/sites/add-site") Register new process
+            .col-xs-6.col-sm-3.placeholder
+              h4 Apps running
+              h3#nbrApps
+              p
+            .col-xs-6.col-sm-3.placeholder
+              h4 Server Address
+              h3= ipAddress
+            .col-xs-6.col-sm-3.placeholder
+              if directories
+                h4 Sites Enabled
+                ul.text-left
+                  for directory in directories
+                    li #{directory}
           block content
-          
-    
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
     script(src='https://code.jquery.com/jquery-3.1.1.min.js')
     script(src='/js/bootstrap.min.js')

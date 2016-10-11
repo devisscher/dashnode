@@ -1,0 +1,37 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc"]
+    },
+    "source": {
+        "include": ["views/", "models", ""],
+        "exclude": ["node_modules/"],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "opts": {
+        "destination": "./docs/docs",
+        "encoding": "utf8",
+        "recurse": true
+    },
+    "templates": {
+        "systemName": "Dashnode",
+        "footer": "Dashnode",
+        "copyright": "2016",
+        "includeDate": true,
+        "navType": "vertical",
+        "theme": "yeti",
+        "linenums": true,
+        "collapseSymbols": false,
+        "inverseNav": false,
+        "outputSourceFiles": true,
+        "outputSourcePath": "src",
+        "dateFormat": "yyyy/mm/dd",
+        "syntaxTheme": "default",
+        "sort": true,
+        "search": false
+    }
+}
