@@ -12,7 +12,12 @@ var pm2 = require('pm2');
 var marked = require('marked');
 var fs = require('fs'),
     path = require('path');
-
+var srcpath;
+       if (router.get('env') === 'development') {
+        srcpath = '/users/tdev/Sites/node/';
+    } else {
+        srcpath = '/home/';
+    }
 var fsService = require('../services/fs-service');
 /** GET ```/```
  * 
@@ -22,7 +27,7 @@ var fsService = require('../services/fs-service');
  */
 router.get('/', function(req, res, next) {
     //var filesProd = getFiles('/etc/nginx/sites-available');
-    var files = fsService.getFiles('/Users/tdev/Sites');
+    var files = fsService.getFiles(srcpath);
     pm2.connect(function(err) {
         if (err) {
             console.error(err);
@@ -62,7 +67,7 @@ router.get('/hosts', function(req, res, next) {
  * @memberof Index
  */
 router.get('/apps', function(req, res, next) {
-    var srcpath = '/home/';
+    
     var directories = getDirectories('/home/');
     console.log(directories);
     res.render('index', { title: 'Applications', directories: directories });
