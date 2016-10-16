@@ -14,6 +14,7 @@ var path = require('path');
 var marked = require('marked');
 var Site = require('../models/site');
 var fsService = require('../services/fs-service');
+var gitService = require('../services/git-service');
 var fs = require('fs'),
     path = require('path');
 
@@ -65,23 +66,30 @@ router.get('/add-site', function(req, res, next) {
  * @memberof Sites
  */
 router.post('/add-site', function(req, res) {
-    var gitRepo = req.body.domainName;
+    var gitRepo = req.body.gitRepo;
     var domainName = req.body.domainName;
-    mongoose.model('Site').create({
-        gitRepo: gitRepo,
-        domainName: domainName
-    }, function(err, site) {
-        if (err) {
-            console.log(err);
-        }
-        gitPullRepository(gitRepo, domainName);
-        res.redirect('/');
-    });
-
+    var startScript = req.body.startScript;
+    /**
+     * createRepo
+     * Boolean
+     * Should a repo be created in /var/www
+     */
+     if (req.body.createRepo){
+         var createRepo = req.body.createRepo;
+         gitService.createAppDirectory(gitRepo, domainName);
+         gitService.gitInitializeRepository(gitRepo, domainName);
+     } else {
+         var createRepo = "off";
+     }
+    function appendObject(obj){
+      var configFile = fs.readFileSync('./settings/data.json');
+      var config = JSON.parse(configFile);
+      config.push(obj);
+      var configJSON = JSON.stringify(config);
+      fs.writeFileSync('./settings/data.json', configJSON);
+    }
+    appendObject({ id: Date.now(), repo:gitRepo, domain:domainName, createRepo: createRepo, startScript: startScript });
+    res.redirect('/');
+    
 });
-
-
-
-
-
 module.exports = router;

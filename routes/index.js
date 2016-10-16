@@ -12,11 +12,12 @@ var pm2 = require('pm2');
 var marked = require('marked');
 var fs = require('fs'),
     path = require('path');
+    
 var srcpath;
        if (router.get('env') === 'development') {
         srcpath = '/users/tdev/Sites/node/';
     } else {
-        srcpath = '/home/';
+        srcpath = '/var/www/';
     }
 var fsService = require('../services/fs-service');
 /** GET ```/```

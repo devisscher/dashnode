@@ -5,8 +5,14 @@ block content
             label(for="gitRepo") Enter the Git URL:
             input.form-control(type="text" id="gitRepo" name="gitRepo")
         .form-group.col-md-6
-            label(for="domainName") Domain name (App will be stored in: <code>/var/www/domain.com</code>)
+            label(for="domainName") Domain name (App will be stored in: <code>/var/www/domain.com</code>):
             input.form-control(type="text" name="domainName" id="domainName")
+        .form-group.col-md-6
+            label(for="createRepo") Create repo?
+            input.form-control(type="checkbox" name="createRepo" id="createRepo")
+        .form-group.col-md-6
+            label(for="startScript") Start script:
+            input.form-control(type="text" name="startScript" id="startScript") 
         .form-group.col-md-6
             input(type="submit" id="savePort" text="Save") 
     // script.

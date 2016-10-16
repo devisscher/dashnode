@@ -8,7 +8,10 @@
 body {
     padding-top: 50px;
 }
-
+.navbar-inverse {
+    background-color: #149639;
+    border-color: transparent;
+}
 
 /*
  * Global add-ons
